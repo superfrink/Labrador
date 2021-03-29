@@ -2381,17 +2381,12 @@ void MainWindow::on_actionI2C_triggered(bool checked)
 
 void MainWindow::on_actionShow_Range_Dialog_on_Main_Page_triggered(bool checked)
 {
-    qDebug() << "on_actionShow_Range_Dialog_on_Main_Page_triggered" << checked;
-    if (checked)
-    {
 #ifndef PLATFORM_ANDROID
-        settings->setValue("ShowRangeDialog", true);
-#endif
+    if (scopeRangeSwitch == nullptr)
+    {
         scopeRangeSwitch = new scopeRangeEnterDialog(nullptr, false, ui->controller_iso->display.topRange, ui->controller_iso->display.botRange, ui->controller_iso->display.window, ui->controller_iso->display.delay);
         scopeRangeSwitch->setWindowFlags(Qt::Widget);
-#ifndef PLATFORM_ANDROID
         ui->verticalLayout_5->insertWidget(2, scopeRangeSwitch);
-#endif
         connect(scopeRangeSwitch, SIGNAL(yTopUpdated(double)), ui->controller_iso, SLOT(setTopRange(double)));
         connect(scopeRangeSwitch, SIGNAL(yBotUpdated(double)), ui->controller_iso, SLOT(setBotRange(double)));
         connect(scopeRangeSwitch, SIGNAL(windowUpdated(double)), ui->controller_iso, SLOT(setTimeWindow(double)));
